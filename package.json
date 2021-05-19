@@ -1,7 +1,7 @@
 {
   "name": "cypress-sendgrid-visual-testing-example",
   "version": "1.0.0",
-  "description": "Visual testing for HTML emails sent via SendGrid design templates",
+  "description": "Visual testing for HTML emails sent via SendGrid dynamic transactional templates",
   "main": "index.js",
   "private": true,
   "scripts": {

@@ -1,5 +1,5 @@
 # cypress-sendgrid-visual-testing-example
-> Visual testing for HTML emails sent via SendGrid design templates
+> Visual testing for HTML emails sent via SendGrid dynamic transactional templates
 
 ## Prerequisites
 
