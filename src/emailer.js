@@ -43,19 +43,22 @@ const initEmailer = async () => {
      * Sends an email by using SendGrid dynamic design template
      * @see Docs https://sendgrid.api-docs.io/v3.0/mail-send/v3-mail-send
      */
-    async sendTemplateEmail({ from, subject, to }) {
+    async sendTemplateEmail({ from, template_id, to }) {
       const body = {
-        from: from || process.env.SENDGRID_FROM,
-        subject,
-        to,
-        template_id: '',
+        from: {
+          email: from || process.env.SENDGRID_FROM,
+        },
+        personalizations: [
+          {
+            to: [{ email: to }],
+          },
+        ],
+        template_id,
       }
-      console.log('send dynamic design template email parameters')
-      console.log(body)
 
       const request = {
         method: 'POST',
-        url: '/mail/send',
+        url: 'v3/mail/send',
         body,
       }
       const [response] = await sgClient.request(request)

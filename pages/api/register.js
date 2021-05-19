@@ -17,13 +17,18 @@ export default async (req, res) => {
     // return to the HTTP caller right away
     res.status(200).json({ name, email })
 
-    const emailer = await initEmailer()
-    const info = await emailer.sendTemplateEmail({
-      to: email,
-      subject: 'Confirmation code 1️⃣2️⃣3️⃣',
-    })
-    console.log('sent a confirmation email to %s', email)
-    return
+    try {
+      const emailer = await initEmailer()
+      await emailer.sendTemplateEmail({
+        to: email,
+        // the ID of the dynamic template we have designed
+        template_id: 'd-9b1e07a7d2994b14ae394026a6ccc997',
+      })
+      console.log('sent a confirmation email to %s', email)
+      return
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return res.status(404)
