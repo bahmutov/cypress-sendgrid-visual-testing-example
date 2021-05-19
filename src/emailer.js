@@ -1,9 +1,11 @@
-// @ts-check
-
-// sending emails using SendGrid API
-// by using pre-designed templates
+// sending ordinary emails using SendGrid API
 // https://sendgrid.com/docs/for-developers/sending-email/quickstart-nodejs/
 const sgMail = require('@sendgrid/mail')
+
+// sending emails using the full SendGrid API
+// for example if we want to use dynamic templates
+// https://github.com/sendgrid/sendgrid-nodejs/tree/main/packages/client
+const sgClient = require('@sendgrid/client')
 
 // a little wrapper object that makes
 // sending emails more convenient
@@ -19,6 +21,7 @@ const initEmailer = async () => {
     throw new Error(`Missing SENDGRID_API_KEY variable`)
   }
   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  sgClient.setApiKey(process.env.SENDGRID_API_KEY)
 
   emailSender = {
     /**
@@ -34,6 +37,30 @@ const initEmailer = async () => {
       console.log('Message sent to %s', options.to)
 
       return info
+    },
+
+    /**
+     * Sends an email by using SendGrid dynamic design template
+     * @see Docs https://sendgrid.api-docs.io/v3.0/mail-send/v3-mail-send
+     */
+    async sendTemplateEmail({ from, subject, to }) {
+      const body = {
+        from: from || process.env.SENDGRID_FROM,
+        subject,
+        to,
+        template_id: '',
+      }
+      console.log('send dynamic design template email parameters')
+      console.log(body)
+
+      const request = {
+        method: 'POST',
+        url: '/mail/send',
+        body,
+      }
+      const [response] = await sgClient.request(request)
+
+      return response
     },
   }
 
