@@ -19,7 +19,7 @@ const confirmationEmailTemplateHTML = readFileSync(
 
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { name, email, companySize } = req.body
+    const { name, email } = req.body
 
     const confirmationCode = codes.createCode(email, name)
     console.log(

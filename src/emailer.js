@@ -1,6 +1,9 @@
 // @ts-check
-// https://nodemailer.com/about/
-const nodemailer = require('nodemailer')
+
+// sending emails using SendGrid API
+// by using pre-designed templates
+// https://sendgrid.com/docs/for-developers/sending-email/quickstart-nodejs/
+const sgMail = require('@sendgrid/mail')
 
 // a little wrapper object that makes
 // sending emails more convenient
@@ -12,29 +15,14 @@ const initEmailer = async () => {
     return emailSender
   }
 
-  if (!process.env.SENDGRID_HOST) {
-    throw new Error(`Missing SENDGRID_ variables`)
+  if (!process.env.SENDGRID_API_KEY) {
+    throw new Error(`Missing SENDGRID_API_KEY variable`)
   }
-
-  const host = process.env.SENDGRID_HOST
-  const port = Number(process.env.SENDGRID_PORT)
-  const secure = port === 465
-  const auth = {
-    user: process.env.SENDGRID_USER,
-    pass: process.env.SENDGRID_PASSWORD,
-  }
-
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth,
-  })
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
   emailSender = {
     /**
-     * Sends an email using node mailer via Ethereal SMTP server
+     * Sends an email through SendGrid
      * @param {*} options Email options object
      * @returns info object with sent email id
      */
@@ -42,7 +30,7 @@ const initEmailer = async () => {
       if (process.env.SENDGRID_FROM) {
         options = { ...options, from: process.env.SENDGRID_FROM }
       }
-      const info = await transporter.sendMail(options)
+      const info = await sgMail.send(options)
       console.log('Message sent to %s', options.to)
 
       return info
