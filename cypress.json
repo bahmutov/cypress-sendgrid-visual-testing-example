@@ -1,0 +1,9 @@
+{
+  "fixturesFolder": false,
+  "supportFile": false,
+  "baseUrl": "http://localhost:3000",
+  "viewportWidth": 1200,
+  "viewportHeight": 800,
+  "video": true,
+  "projectId": "v1m866"
+}
