@@ -1,7 +1,7 @@
 {
-  "name": "cypress-ethereal-email-example",
+  "name": "cypress-sendgrid-visual-testing-example",
   "version": "1.0.0",
-  "description": "Using an external Ethereal email inbox during Cypress tests",
+  "description": "Visual testing for HTML emails sent via SendGrid design templates",
   "main": "index.js",
   "private": true,
   "scripts": {
