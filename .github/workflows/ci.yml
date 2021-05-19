@@ -30,6 +30,3 @@ jobs:
           install: false
           # make sure the app has fully started
           wait-on: 'http://localhost:3000'
-          record: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
