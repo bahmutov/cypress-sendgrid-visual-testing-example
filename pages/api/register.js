@@ -23,6 +23,10 @@ export default async (req, res) => {
         to: email,
         // the ID of the dynamic template we have designed
         template_id: 'd-9b1e07a7d2994b14ae394026a6ccc997',
+        dynamic_template_data: {
+          code: confirmationCode,
+          username: name,
+        },
       })
       console.log('sent a confirmation email to %s', email)
       return

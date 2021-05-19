@@ -43,14 +43,16 @@ const initEmailer = async () => {
      * Sends an email by using SendGrid dynamic design template
      * @see Docs https://sendgrid.api-docs.io/v3.0/mail-send/v3-mail-send
      */
-    async sendTemplateEmail({ from, template_id, to }) {
+    async sendTemplateEmail({ from, template_id, dynamic_template_data, to }) {
       const body = {
         from: {
           email: from || process.env.SENDGRID_FROM,
+          name: 'Confirmation system',
         },
         personalizations: [
           {
             to: [{ email: to }],
+            dynamic_template_data,
           },
         ],
         template_id,

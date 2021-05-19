@@ -41,20 +41,30 @@ describe('Email confirmation', () => {
       .then((html) => {
         cy.document({ log: false }).invoke({ log: false }, 'write', html)
       })
-    cy.log('**email has the user name**')
-    cy.contains('[data-cy=user-name]', userName).should('be.visible')
+    cy.log('**email has the user name**').pause()
+    cy.contains(`Dear ${userName},`).should('be.visible')
     cy.log('**email has the confirmation code**')
-    cy.get('[data-cy=confirmation-code]')
+    cy.contains('a', 'Enter the confirmation code')
       .should('be.visible')
       .invoke('text')
+      .then((text) => Cypress._.last(text.split(' ')))
       .then((code) => {
-        cy.log(`**confirm code ${code} works**`)
+        cy.log(`**confirm the code ${code} works**`)
         expect(code, 'confirmation code')
           .to.be.a('string')
           .and.have.length.gt(5)
 
-        cy.contains('Confirm registration').click()
+        // before we click on the link, let's make sure it
+        // does not open a new browser window
+        cy.contains('a', 'Enter the confirmation code')
+          // by default the link wants to open a new window
+          .should('have.attr', 'target', '_blank')
+          // but the test will point it back at itself
+          .invoke('attr', 'target', '_self')
+          .click()
 
+        // use the location check once resolved
+        // https://github.com/cypress-io/cypress/issues/16463
         cy.get('#confirmation_code', { timeout: 10000 }).type(code)
         cy.get('button[type=submit]').click()
         // first positive assertion, then negative
