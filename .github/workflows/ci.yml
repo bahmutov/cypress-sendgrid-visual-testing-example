@@ -19,10 +19,7 @@ jobs:
       - name: Start the app 🚦
         run: npm start &
         env:
-          SENDGRID_HOST: ${{ secrets.SENDGRID_HOST }}
-          SENDGRID_PORT: ${{ secrets. SENDGRID_PORT }}
-          SENDGRID_USER: ${{ secrets.SENDGRID_USER }}
-          SENDGRID_PASSWORD: ${{ secrets.SENDGRID_PASSWORD }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           SENDGRID_FROM: ${{ secrets.SENDGRID_FROM }}
 
       # run Cypress tests
