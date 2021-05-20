@@ -45,7 +45,7 @@ describe('Email confirmation', () => {
       .then((html) => {
         cy.document({ log: false }).invoke({ log: false }, 'write', html)
       })
-    cy.log('**email has the user name**').pause()
+    cy.log('**email has the user name**')
     cy.contains(`Dear ${userName},`).should('be.visible')
     cy.log('**email has the confirmation code**')
     cy.contains('a', 'Enter the confirmation code')
@@ -58,16 +58,15 @@ describe('Email confirmation', () => {
           .to.be.a('string')
           .and.have.length.gt(5)
 
-        // expected confirmation url
-        const confirmUrl = `${Cypress.config('baseUrl')}/confirm`
+        // unfortunately we cannot confirm the destination URL
+        // via <a href="..."> attribute, because SendGrid changes
+        // the href to its proxy URL
 
         // before we click on the link, let's make sure it
         // does not open a new browser window
         cy.contains('a', 'Enter the confirmation code')
-          // confirm the confirmation URL
-          .should('have.attr', 'href', confirmUrl)
           // by default the link wants to open a new window
-          .and('have.attr', 'target', '_blank')
+          .should('have.attr', 'target', '_blank')
           // but the test can point the open back at itself
           // so the click opens it in the current browser window
           .invoke('attr', 'target', '_self')
@@ -75,7 +74,11 @@ describe('Email confirmation', () => {
 
         // use the location check once resolved
         // https://github.com/cypress-io/cypress/issues/16463
-        cy.get('#confirmation_code', { timeout: 10000 }).type(code)
+        cy.get('#confirmation_code', { timeout: 10000 }).should('be.visible')
+        // confirm the URL changed back to our web app
+        cy.location('pathname').should('equal', '/confirm')
+
+        cy.get('#confirmation_code').type(code)
         cy.get('button[type=submit]').click()
         // first positive assertion, then negative
         // https://glebbahmutov.com/blog/negative-assertions/

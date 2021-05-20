@@ -24,3 +24,13 @@ SENDGRID_API_KEY=... SENDGRID_FROM=... npm start
 ```shell
 $ as-a cypress-sendgrid-visual-testing-example npm start
 ```
+
+When running the tests locally if we want to send visual results to Percy we need the `PERCY_TOKEN` environment variable.
+
+```shell
+# without visual tests
+$ npx cypress open
+# with visual tests
+$ PERCY_TOKEN=... npx percy exec -- npx cypress open
+$ as-a cypress-sendgrid-visual-testing-example-percy npx percy exec -- npx cypress open
+```
