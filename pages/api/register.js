@@ -26,6 +26,7 @@ export default async (req, res) => {
         dynamic_template_data: {
           code: confirmationCode,
           username: name,
+          confirm_url: 'http://localhost:3000/confirm',
         },
       })
       console.log('sent a confirmation email to %s', email)

@@ -58,12 +58,18 @@ describe('Email confirmation', () => {
           .to.be.a('string')
           .and.have.length.gt(5)
 
+        // expected confirmation url
+        const confirmUrl = `${Cypress.config('baseUrl')}/confirm`
+
         // before we click on the link, let's make sure it
         // does not open a new browser window
         cy.contains('a', 'Enter the confirmation code')
+          // confirm the confirmation URL
+          .should('have.attr', 'href', confirmUrl)
           // by default the link wants to open a new window
-          .should('have.attr', 'target', '_blank')
-          // but the test will point it back at itself
+          .and('have.attr', 'target', '_blank')
+          // but the test can point the open back at itself
+          // so the click opens it in the current browser window
           .invoke('attr', 'target', '_self')
           .click()
 
