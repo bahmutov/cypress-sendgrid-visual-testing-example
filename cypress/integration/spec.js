@@ -23,7 +23,11 @@ describe('Email confirmation', () => {
     cy.get('#name').type(userName)
     cy.get('#email').type(userEmail)
     cy.get('#company_size').select('3')
-    cy.percySnapshot('1 - registration screen')
+    // we need to ignore the userEmail region when doing
+    // the visual diff, since the text is dynamic
+    cy.percySnapshot('1 - registration screen', {
+      percyCSS: '#email { display: none; }',
+    })
 
     cy.get('button[type=submit]').click()
 
