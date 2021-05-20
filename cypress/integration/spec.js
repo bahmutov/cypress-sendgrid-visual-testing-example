@@ -2,6 +2,8 @@
 // @ts-check
 // https://github.com/bahmutov/cypress-recurse
 const { recurse } = require('cypress-recurse')
+// https://docs.percy.io/docs/cypress
+require('@percy/cypress')
 
 describe('Email confirmation', () => {
   let userEmail
@@ -21,6 +23,8 @@ describe('Email confirmation', () => {
     cy.get('#name').type(userName)
     cy.get('#email').type(userEmail)
     cy.get('#company_size').select('3')
+    cy.percySnapshot('1 - registration screen')
+
     cy.get('button[type=submit]').click()
 
     cy.log('**shows message to check emails**')

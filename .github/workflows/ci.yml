@@ -30,3 +30,9 @@ jobs:
           install: false
           # make sure the app has fully started
           wait-on: 'http://localhost:3000'
+          # run Percy program that would run Cypress
+          # and forward snapshots to the Percy service
+          command-prefix: 'percy exec -- npx'
+        # inject the Percy token
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
