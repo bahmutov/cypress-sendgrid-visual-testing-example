@@ -63,6 +63,7 @@ describe('Email confirmation', () => {
         // add synthetic delay, otherwise the email
         // flashes very quickly
         cy.wait(2000)
+        cy.percySnapshot('2 - email')
 
         // unfortunately we cannot confirm the destination URL
         // via <a href="..."> attribute, because SendGrid changes
