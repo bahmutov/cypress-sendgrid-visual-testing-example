@@ -103,6 +103,20 @@ describe('Email confirmation', () => {
         // https://glebbahmutov.com/blog/negative-assertions/
         cy.get('[data-cy=confirmed-code]').should('be.visible')
         cy.get('[data-cy=incorrect-code]').should('not.exist')
+
+        cy.get('#confirmation_code').clear().type('correct code')
+        cy.percySnapshot('3 - correct code')
       })
+  })
+
+  it('rejects wrong code', () => {
+    cy.visit('/confirm')
+    cy.get('#confirmation_code').type('wrong code')
+    cy.get('button[type=submit]').click()
+    // first positive assertion, then negative
+    // https://glebbahmutov.com/blog/negative-assertions/
+    cy.get('[data-cy=incorrect-code]').should('be.visible')
+    cy.get('[data-cy=confirmed-code]').should('not.exist')
+    cy.percySnapshot('incorrect code')
   })
 })
