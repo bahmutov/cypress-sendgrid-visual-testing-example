@@ -44,7 +44,7 @@ export default function Confirm() {
       data-cy="confirmed-code"
       className="text-center py-3 px-12 bg-blue-400 mt-5 mr-5 rounded-md text-white text-lg focus:outline-none w-full"
     >
-      Valid confirmation code 🎉
+      Valid confirmation code!
     </div>
   )
 
