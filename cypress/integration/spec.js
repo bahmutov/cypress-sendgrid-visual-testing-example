@@ -21,14 +21,12 @@ describe('Email confirmation', () => {
 
     cy.visit('/')
     cy.get('#name').type(userName)
-    cy.get('#email').type(userEmail)
     cy.get('#company_size').select('3')
-    // we need to ignore the userEmail region when doing
-    // the visual diff, since the text is dynamic
-    cy.percySnapshot('1 - registration screen', {
-      percyCSS: '#email { display: none; }',
-    })
-
+    // avoiding visual difference due to new email
+    cy.get('#email').type('gleb@acme.io')
+    cy.percySnapshot('1 - registration screen')
+    // type the real email
+    cy.get('#email').clear().type(userEmail)
     cy.get('button[type=submit]').click()
 
     cy.log('**shows message to check emails**')
@@ -62,12 +60,17 @@ describe('Email confirmation', () => {
           .to.be.a('string')
           .and.have.length.gt(5)
 
+        // add synthetic delay, otherwise the email
+        // flashes very quickly
+        cy.wait(2000)
+
         // unfortunately we cannot confirm the destination URL
         // via <a href="..."> attribute, because SendGrid changes
         // the href to its proxy URL
 
         // before we click on the link, let's make sure it
         // does not open a new browser window
+        // https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-target_blank
         cy.contains('a', 'Enter the confirmation code')
           // by default the link wants to open a new window
           .should('have.attr', 'target', '_blank')
