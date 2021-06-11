@@ -91,13 +91,9 @@ describe('Email confirmation', () => {
           .invoke('attr', 'target', '_self')
           .click()
 
-        // use the location check once resolved
-        // https://github.com/cypress-io/cypress/issues/16463
-        cy.get('#confirmation_code', { timeout: 10000 }).should('be.visible')
         // confirm the URL changed back to our web app
-        cy.location('pathname').should('equal', '/confirm')
-
-        cy.get('#confirmation_code').type(code)
+        cy.location('pathname', { timeout: 30000 }).should('equal', '/confirm')
+        cy.get('#confirmation_code').should('be.visible').type(code)
         cy.get('button[type=submit]').click()
         // first positive assertion, then negative
         // https://glebbahmutov.com/blog/negative-assertions/
