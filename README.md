@@ -1,4 +1,4 @@
-# cypress-sendgrid-visual-testing-example ![cypress version](https://img.shields.io/badge/cypress-7.7.0-brightgreen)
+# cypress-sendgrid-visual-testing-example ![cypress version](https://img.shields.io/badge/cypress-8.3.1-brightgreen)
 > Visual testing for HTML emails sent via SendGrid dynamic transactional templates
 
 ## Prerequisites
