@@ -66,14 +66,14 @@ describe('Email confirmation', () => {
         cy.wait(2000)
         // replace the dynamic confirmation code with constant text
         // since we already validated the code
-        cy.get('@codeLink').invoke(
-          'text',
-          `Enter the confirmation code abc1234`,
-        )
-        cy.contains('strong', new RegExp('^' + code + '$')).invoke(
-          'text',
-          'abc1234',
-        )
+        // cy.get('@codeLink').invoke(
+        //   'text',
+        //   `Enter the confirmation code abc1234`,
+        // )
+        // cy.contains('strong', new RegExp('^' + code + '$')).invoke(
+        //   'text',
+        //   'abc1234',
+        // )
         cy.percySnapshot('2 - email')
 
         // unfortunately we cannot confirm the destination URL
