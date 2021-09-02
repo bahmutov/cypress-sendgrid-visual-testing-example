@@ -34,3 +34,5 @@ $ npx cypress open
 $ PERCY_TOKEN=... npx percy exec -- npx cypress open
 $ as-a cypress-sendgrid-visual-testing-example-percy npx percy exec -- npx cypress open
 ```
+
+You can find the Percy visual results at [percy.io/bahmutov/cypress-sendgrid-visual-testing-example](https://percy.io/bahmutov/cypress-sendgrid-visual-testing-example)
